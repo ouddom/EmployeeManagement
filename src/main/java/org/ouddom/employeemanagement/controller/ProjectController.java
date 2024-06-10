@@ -8,6 +8,8 @@ import org.ouddom.employeemanagement.service.ProjectService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.UUID;
+
 @RestController
 @RequestMapping("api/v1/projects")
 @AllArgsConstructor
@@ -25,5 +27,11 @@ public class ProjectController {
     @Operation(summary = "Get all projects", description = "Get all projects from database")
     public ResponseEntity<?> getAll(@RequestParam(defaultValue = "0") Integer pageNo, @RequestParam(defaultValue = "10") Integer pageSize){
         return ResponseEntity.ok().body(projectService.getAll(pageNo,pageSize));
+    }
+
+    @DeleteMapping("{id}")
+    @Operation(summary = "Delete project by id", description = "Delete project by id from database")
+    public ResponseEntity<?> deleteById(@PathVariable UUID id){
+        return ResponseEntity.ok().body(projectService.deleteById(id));
     }
 }

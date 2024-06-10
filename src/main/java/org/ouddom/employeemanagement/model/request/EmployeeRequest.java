@@ -1,6 +1,6 @@
 package org.ouddom.employeemanagement.model.request;
 
-import jakarta.persistence.*;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

@@ -16,6 +16,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 
 @Service
@@ -53,5 +54,16 @@ public class ProjectServiceImpl implements ProjectService {
                     .totalPages(page.getTotalPages())
                     .build();
         }
+    }
+
+    @Override
+    public ApiResponse<ProjectDTO> deleteById(UUID id) {
+        projectRepository.findById(id).orElseThrow(()-> new NotFoundExceptionClass("A project with id: " + id + " not exist!"));
+        projectRepository.deleteById(id);
+        return ApiResponse.<ProjectDTO>builder()
+                .message("Delete project with id: " + id + " successfully")
+                .payload(null)
+                .status(HttpStatus.OK)
+                .build();
     }
 }

@@ -18,20 +18,26 @@ public class ProjectController {
     private final ProjectService projectService;
 
     @PostMapping("")
-    @Operation(summary = "Create a new project", description = "Add a new project to the database")
+    @Operation(summary = "Create a new project")
     public ResponseEntity<?> create(@RequestBody ProjectRequest projectRequest){
         return ResponseEntity.ok().body(projectService.create(projectRequest));
     }
 
     @GetMapping("")
-    @Operation(summary = "Get all projects", description = "Get all projects from database")
+    @Operation(summary = "Get all projects")
     public ResponseEntity<?> getAll(@RequestParam(defaultValue = "0") Integer pageNo, @RequestParam(defaultValue = "10") Integer pageSize){
         return ResponseEntity.ok().body(projectService.getAll(pageNo,pageSize));
     }
 
     @DeleteMapping("{id}")
-    @Operation(summary = "Delete project by id", description = "Delete project by id from database")
+    @Operation(summary = "Delete project by id")
     public ResponseEntity<?> deleteById(@PathVariable UUID id){
         return ResponseEntity.ok().body(projectService.deleteById(id));
+    }
+
+    @PutMapping("{id}")
+    @Operation(summary = "Update project by id")
+    public ResponseEntity<?> updateById(@PathVariable UUID id, ProjectRequest projectRequest){
+        return ResponseEntity.ok().body(projectService.updateById(id,projectRequest));
     }
 }

@@ -13,4 +13,5 @@ public interface ProjectService {
     ApiResponse<ProjectDTO> create(ProjectRequest project);
     PageResponse<List<ProjectDTO>> getAll(Integer pageNo, Integer pageSize);
     ApiResponse<ProjectDTO> deleteById(UUID id);
+    ApiResponse<ProjectDTO> updateById(UUID id,ProjectRequest projectRequest);
 }

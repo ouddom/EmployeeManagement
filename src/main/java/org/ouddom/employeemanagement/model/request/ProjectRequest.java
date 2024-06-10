@@ -18,4 +18,7 @@ public class ProjectRequest {
     public Project toEntity(String name){
         return new Project(null,this.name);
     }
+    public Project toEntity(UUID id,String name){
+        return new Project(id,this.name);
+    }
 }

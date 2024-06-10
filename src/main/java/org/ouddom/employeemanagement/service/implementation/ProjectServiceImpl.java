@@ -16,6 +16,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 
@@ -65,5 +66,20 @@ public class ProjectServiceImpl implements ProjectService {
                 .payload(null)
                 .status(HttpStatus.OK)
                 .build();
+    }
+
+    @Override
+    public ApiResponse<ProjectDTO> updateById(UUID id,ProjectRequest projectRequest) {
+        if(projectRequest.getName().isBlank()){
+            throw new NullExceptionClass("A project name field is required!","project");
+        }else {
+            projectRepository.findById(id).orElseThrow(() -> new NotFoundExceptionClass("A project with id: " + id + " not exist!"));
+            return ApiResponse.<ProjectDTO>builder()
+                    .message("Update project successfully")
+                    .payload(projectRepository.save(projectRequest.toEntity(id,projectRequest.getName())).toDto())
+                    .status(HttpStatus.OK)
+                    .build();
+
+        }
     }
 }

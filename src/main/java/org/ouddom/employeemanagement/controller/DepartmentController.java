@@ -1,0 +1,4 @@
+package org.ouddom.employeemanagement.controller;
+
+public class DepartmentController {
+}

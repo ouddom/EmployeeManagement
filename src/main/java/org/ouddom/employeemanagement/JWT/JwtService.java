@@ -1,4 +1,4 @@
-package org.ouddom.employeemanagement.jwt;
+package org.ouddom.employeemanagement.JWT;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;

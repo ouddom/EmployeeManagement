@@ -1,6 +1,6 @@
 package org.ouddom.employeemanagement.controller;
 
-import org.ouddom.employeemanagement.jwt.JwtService;
+import org.ouddom.employeemanagement.JWT.JwtService;
 import org.ouddom.employeemanagement.common.LoginResponse;
 import org.ouddom.employeemanagement.domain.dto.LoginUserDto;
 import org.ouddom.employeemanagement.domain.dto.RegisterUserDto;

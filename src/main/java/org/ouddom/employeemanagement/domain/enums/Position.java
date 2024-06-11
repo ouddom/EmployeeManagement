@@ -1,4 +1,4 @@
-package org.ouddom.employeemanagement.enums;
+package org.ouddom.employeemanagement.domain.enums;
 
 public enum Position {
     INTERN,

@@ -1,14 +1,14 @@
-package org.ouddom.employeemanagement.model.entity;
+package org.ouddom.employeemanagement.domain.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.ouddom.employeemanagement.model.dto.DepartmentDTO;
+import org.ouddom.employeemanagement.domain.dto.DepartmentDTO;
 
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
+
 @Data
 @Entity
 @AllArgsConstructor

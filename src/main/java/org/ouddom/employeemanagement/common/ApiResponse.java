@@ -1,4 +1,4 @@
-package org.ouddom.employeemanagement.model.response;
+package org.ouddom.employeemanagement.common;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;

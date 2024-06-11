@@ -1,8 +1,8 @@
-package org.ouddom.employeemanagement.model.dto;
+package org.ouddom.employeemanagement.domain.dto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.ouddom.employeemanagement.enums.Position;
+import org.ouddom.employeemanagement.domain.enums.Position;
 import java.util.List;
 import java.util.UUID;
 

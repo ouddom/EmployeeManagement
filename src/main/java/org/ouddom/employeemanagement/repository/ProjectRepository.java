@@ -1,6 +1,6 @@
 package org.ouddom.employeemanagement.repository;
 
-import org.ouddom.employeemanagement.model.entity.Project;
+import org.ouddom.employeemanagement.domain.entity.Project;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

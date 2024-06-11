@@ -1,11 +1,11 @@
-package org.ouddom.employeemanagement.model.request;
+package org.ouddom.employeemanagement.domain.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.ouddom.employeemanagement.model.dto.EmployeeDTO;
-import org.ouddom.employeemanagement.model.entity.Department;
-import org.ouddom.employeemanagement.model.entity.Employee;
+import org.ouddom.employeemanagement.domain.dto.EmployeeDTO;
+import org.ouddom.employeemanagement.domain.entity.Department;
+import org.ouddom.employeemanagement.domain.entity.Employee;
 
 import java.util.List;
 import java.util.UUID;

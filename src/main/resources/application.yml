@@ -15,3 +15,7 @@ spring:
     open-in-view: false
 server:
   port: 8080
+security:
+  jwt:
+    secret-key: yt3Jm2UOMfoAi21Ho1Pae3ncS2gh3Qaj55iAf3oOEvm39A2j87eGa
+    expiration-time: 3600000

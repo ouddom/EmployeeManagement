@@ -1,10 +1,9 @@
 package org.ouddom.employeemanagement.service;
 
-import org.ouddom.employeemanagement.model.dto.ProjectDTO;
-import org.ouddom.employeemanagement.model.request.EmployeeRequest;
-import org.ouddom.employeemanagement.model.request.ProjectRequest;
-import org.ouddom.employeemanagement.model.response.ApiResponse;
-import org.ouddom.employeemanagement.model.response.PageResponse;
+import org.ouddom.employeemanagement.domain.dto.ProjectDTO;
+import org.ouddom.employeemanagement.domain.request.ProjectRequest;
+import org.ouddom.employeemanagement.common.ApiResponse;
+import org.ouddom.employeemanagement.common.PageResponse;
 
 import java.util.List;
 import java.util.UUID;

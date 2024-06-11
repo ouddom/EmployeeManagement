@@ -1,13 +1,13 @@
-package org.ouddom.employeemanagement.model.request;
+package org.ouddom.employeemanagement.domain.request;
 
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.ouddom.employeemanagement.enums.Position;
-import org.ouddom.employeemanagement.model.entity.Department;
-import org.ouddom.employeemanagement.model.entity.Employee;
-import org.ouddom.employeemanagement.model.entity.Project;
+import org.ouddom.employeemanagement.domain.enums.Position;
+import org.ouddom.employeemanagement.domain.entity.Department;
+import org.ouddom.employeemanagement.domain.entity.Employee;
+import org.ouddom.employeemanagement.domain.entity.Project;
 
 import java.util.List;
 import java.util.UUID;

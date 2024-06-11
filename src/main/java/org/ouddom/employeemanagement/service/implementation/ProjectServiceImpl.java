@@ -1,5 +1,6 @@
 package org.ouddom.employeemanagement.service.implementation;
 import lombok.AllArgsConstructor;
+import org.ouddom.employeemanagement.domain.entity.User;
 import org.ouddom.employeemanagement.exception.NotFoundExceptionClass;
 import org.ouddom.employeemanagement.exception.NullExceptionClass;
 import org.ouddom.employeemanagement.domain.dto.ProjectDTO;
@@ -13,6 +14,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -26,6 +28,7 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     public ApiResponse<ProjectDTO> create(ProjectRequest projectRequest) {
+        //User current = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if(projectRequest.getName().isBlank()){
             throw new NullExceptionClass("A project name field is required","project");
         }else{

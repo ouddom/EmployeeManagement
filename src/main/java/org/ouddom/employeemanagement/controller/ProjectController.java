@@ -44,4 +44,6 @@ public class ProjectController {
     public ResponseEntity<?> updateById(@PathVariable UUID id, ProjectRequest projectRequest){
         return ResponseEntity.ok().body(projectService.updateById(id,projectRequest));
     }
+
+
 }

@@ -14,9 +14,7 @@ import java.util.UUID;
 @RestController
 @RequestMapping("api/v1/projects")
 @AllArgsConstructor
-
 @SecurityRequirement(name = "bearerAuth")
-
 @Tag(name = "Projects", description = "Operations related to employee management")
 public class ProjectController {
     private final ProjectService projectService;

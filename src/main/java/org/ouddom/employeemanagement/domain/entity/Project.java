@@ -11,20 +11,20 @@ import java.util.UUID;
 
 @Data
 @Entity
-@AllArgsConstructor
 @NoArgsConstructor
 public class Project {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
     private String name;
-    @ManyToMany(mappedBy = "projects")
+    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "projects")
     private List<Employee> employees;
 
     public Project(UUID id,String name){
         this.id = id;
         this.name = name;
     }
+
     public ProjectDTO toDto(){
         return new ProjectDTO(this.id,this.name);
     }

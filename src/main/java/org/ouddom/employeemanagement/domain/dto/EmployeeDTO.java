@@ -1,4 +1,5 @@
 package org.ouddom.employeemanagement.domain.dto;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -11,11 +12,10 @@ import java.util.UUID;
 @NoArgsConstructor
 public class EmployeeDTO {
     private UUID id;
-    private String firstName;
-    private String lastName;
-    private String email;
-    private Position position;
+    private String name;
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private DepartmentDTO departmentDTO;
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private List<ProjectDTO> projects;
 
 }

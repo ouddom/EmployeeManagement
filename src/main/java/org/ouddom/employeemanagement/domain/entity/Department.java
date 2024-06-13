@@ -21,6 +21,11 @@ public class Department {
     @OneToMany(mappedBy = "department")
     private List<Employee> employees;
 
+    public Department(UUID id,String name){
+        this.id = id;
+        this.name = name;
+    }
+
     public DepartmentDTO toDto(){
         return new DepartmentDTO(this.id,this.name);
     }

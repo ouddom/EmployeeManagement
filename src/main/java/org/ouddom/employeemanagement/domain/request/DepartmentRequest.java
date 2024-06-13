@@ -15,13 +15,12 @@ import java.util.UUID;
 @NoArgsConstructor
 public class DepartmentRequest {
     private String name;
-    private List<EmployeeDTO> employees;
 
-    public Department toEntity(List<Employee> employees){
-        return new Department(null,this.name,employees);
+    public Department toEntity(String name){
+        return new Department(null,this.name);
     }
 
-    public Department toEntity(UUID id,List<Employee> employees){
-        return new Department(id,this.name,employees);
+    public Department toEntity(UUID id,String name){
+        return new Department(id,this.name);
     }
 }

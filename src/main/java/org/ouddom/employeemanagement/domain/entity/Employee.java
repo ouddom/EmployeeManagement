@@ -44,7 +44,7 @@ public class Employee {
                 this.id,
                 this.name,
                 this.department.toDto(),
-                this.projects.stream().map(Project::toDto).collect(Collectors.toList())
+                this.projects.stream().map(Project::toDto).toList()
         );
     }
 }

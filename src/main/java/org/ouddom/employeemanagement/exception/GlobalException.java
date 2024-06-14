@@ -76,7 +76,6 @@ public class GlobalException extends ResponseEntityExceptionHandler {
         if (exception instanceof BadCredentialsException) {
             errorDetail = ProblemDetail.forStatusAndDetail(HttpStatusCode.valueOf(401), exception.getMessage());
             errorDetail.setProperty("description", "The username or password is incorrect");
-
             return errorDetail;
         }
 
@@ -99,11 +98,6 @@ public class GlobalException extends ResponseEntityExceptionHandler {
             errorDetail = ProblemDetail.forStatusAndDetail(HttpStatusCode.valueOf(403), exception.getMessage());
             errorDetail.setProperty("description", "The JWT token has expired");
         }
-
-//        if (errorDetail == null) {
-//            errorDetail = ProblemDetail.forStatusAndDetail(HttpStatusCode.valueOf(500), exception.getMessage());
-//            errorDetail.setProperty("description", "Unknown internal server error.");
-//        }
 
         return errorDetail;
     }

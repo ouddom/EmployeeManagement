@@ -13,4 +13,6 @@ public interface ProjectService {
     PageResponse<List<ProjectDTO>> getAll(Integer pageNo, Integer pageSize);
     ApiResponse<ProjectDTO> deleteById(UUID id);
     ApiResponse<ProjectDTO> updateById(UUID id,ProjectRequest projectRequest);
+
+
 }

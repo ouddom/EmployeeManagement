@@ -1,19 +1,22 @@
 package org.ouddom.employeemanagement.domain.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.ouddom.employeemanagement.domain.dto.ProjectDTO;
-import org.ouddom.employeemanagement.domain.enums.Position;
+import lombok.ToString;
 import org.ouddom.employeemanagement.domain.dto.EmployeeDTO;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 @Data
 @Entity
+@AllArgsConstructor
 @NoArgsConstructor
+@ToString
 public class Employee {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -22,24 +25,19 @@ public class Employee {
     @Column(nullable = false)
     private String name;
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "department_id", nullable = false)
-    private Department department;
+    @JoinColumn(name = "department_id")
+    private Department department = new Department();
 
+    @JsonIgnore
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "employee_projects",
             joinColumns = @JoinColumn(name = "employee_id"),
             inverseJoinColumns = @JoinColumn(name = "projects_id")
     )
-    private List<Project> projects;
-
-    public Employee(UUID id, String name , Department department , List<Project> projects){
-        this.id = id;
-        this.name = name;
-        this.department = department;
-        this.projects = projects;
-    }
+    private List<Project> projects = new ArrayList<>();
 
     public EmployeeDTO toDto(){
         return new EmployeeDTO(

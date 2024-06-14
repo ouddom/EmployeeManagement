@@ -1,8 +1,6 @@
 package org.ouddom.employeemanagement.service.implementation;
 import lombok.AllArgsConstructor;
 import org.ouddom.employeemanagement.domain.entity.Employee;
-import org.ouddom.employeemanagement.domain.entity.User;
-import org.ouddom.employeemanagement.domain.request.EmployeeRequest;
 import org.ouddom.employeemanagement.exception.NotFoundExceptionClass;
 import org.ouddom.employeemanagement.exception.NullExceptionClass;
 import org.ouddom.employeemanagement.domain.dto.ProjectDTO;
@@ -17,13 +15,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 
 @Service
@@ -37,9 +33,16 @@ public class ProjectServiceImpl implements ProjectService {
         if(projectRequest.getName().isBlank()){
             throw new NullExceptionClass("A project name field is required","project");
         }else{
+            List<Employee> employees = new ArrayList<>();
+            if(projectRequest.getEmployeeRequests() != null){
+                for (UUID employeeId:projectRequest.getEmployeeRequests()){
+                    Employee employee = (employeeRepository.findById(employeeId).orElseThrow(() -> new NotFoundExceptionClass("employee not found")));
+                    employees.add(employee);
+                }
+            }
             return ApiResponse.<ProjectDTO>builder()
                     .message("Successfully create project")
-                    .payload(projectRepository.save(projectRequest.toEntity(projectRequest.getName())).toDto())
+                    .payload(projectRepository.save(projectRequest.toEntity(projectRequest.getName(),employees)).toDto())
                     .status(HttpStatus.CREATED)
                     .build();
         }

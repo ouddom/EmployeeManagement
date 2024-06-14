@@ -8,7 +8,6 @@ import org.ouddom.employeemanagement.domain.entity.Department;
 import org.ouddom.employeemanagement.domain.entity.Employee;
 import org.ouddom.employeemanagement.domain.entity.Project;
 import org.ouddom.employeemanagement.domain.request.EmployeeRequest;
-import org.ouddom.employeemanagement.domain.request.ProjectRequest;
 import org.ouddom.employeemanagement.exception.NotFoundExceptionClass;
 import org.ouddom.employeemanagement.exception.NullExceptionClass;
 import org.ouddom.employeemanagement.repository.DepartmentRepository;
@@ -23,6 +22,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -32,23 +33,31 @@ public class EmployeeServiceImpl implements EmployeeService {
     private final DepartmentRepository departmentRepository;
     @Override
     public ApiResponse<EmployeeDTO> create(EmployeeRequest employeeRequest) {
+        // Validate and fetch the department
+        if (employeeRequest.getDepartmentId() == null) {
+            throw new NullExceptionClass("Department field is required!", "Department");
+        }
+        Department department = departmentRepository.findById(employeeRequest.getDepartmentId())
+                .orElseThrow(() -> new NotFoundExceptionClass("Department not found!"));
+
+        // Validate and fetch the projects
         List<Project> projects = new ArrayList<>();
-        for(ProjectRequest projectRequest: employeeRequest.getProjects()){
-            if(projectRequest.getName() == null || projectRequest.getName().isBlank()) {
-                throw new NullExceptionClass("Project name can not be empty!","Project");
-            }
-            projects.add(projectRepository.findByName(employeeRequest.getName()));
+        if (employeeRequest.getProjectIds() != null) {
+            projects = employeeRequest.getProjectIds().stream()
+                    .map(projectId -> projectRepository.findById(projectId)
+                            .orElseThrow(() -> new NotFoundExceptionClass("Project not found!")))
+                    .collect(Collectors.toList());
         }
 
-        if(employeeRequest.getDepartment() == null || employeeRequest.getDepartment().getName().isBlank()){
-            throw new NullExceptionClass("Department name can not be empty!","Project");
-        }
-        Department department = departmentRepository.findByName(employeeRequest.getDepartment().getName());
-        Employee employee = new Employee(null,employeeRequest.getName(),department,projects);
-        employeeRepository.save(employee);
+        // Create the employee and convert to DTO
+        Employee employee = employeeRequest.toEntity(employeeRequest.getName(), department, projects);
+        Employee savedEmployee = employeeRepository.save(employee);
+        EmployeeDTO employeeDTO = savedEmployee.toDto();
+
+        // Build and return the response
         return ApiResponse.<EmployeeDTO>builder()
                 .message("Create Employee successfully!")
-                .payload(null)
+                .payload(employeeDTO)
                 .status(HttpStatus.OK)
                 .build();
     }

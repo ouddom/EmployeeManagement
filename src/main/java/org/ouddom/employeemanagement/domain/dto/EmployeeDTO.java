@@ -13,9 +13,7 @@ import java.util.UUID;
 public class EmployeeDTO {
     private UUID id;
     private String name;
-    @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private DepartmentDTO departmentDTO;
-    @JsonInclude(JsonInclude.Include.NON_EMPTY)
-    private List<ProjectDTO> projects;
+    private List<ProjectDTO> projectsDTO;
 
 }

@@ -16,14 +16,14 @@ import java.util.UUID;
 @NoArgsConstructor
 public class EmployeeRequest {
     private String name;
-    private DepartmentRequest department;
-    private List<ProjectRequest> projects;
+    private UUID departmentId;
+    private List<UUID> projectIds;
 
-    public Employee toEntity(Department department,List<Project> projects){
-        return new Employee(null,this.name,department,projects);
+    public Employee toEntity(String name,Department department,List<Project> projects){
+        return new Employee(null,name,department,projects);
     }
 
-    public Employee toEntity(UUID id,Department department,List<Project> projects){
-        return new Employee(id,this.name,department,projects);
+    public Employee toEntity(UUID id,String name,Department department,List<Project> projects){
+        return new Employee(id,name,department,projects);
     }
 }

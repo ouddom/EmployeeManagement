@@ -2,7 +2,7 @@ package org.ouddom.employeemanagement.service.implementation;
 
 import lombok.AllArgsConstructor;
 import org.ouddom.employeemanagement.common.ApiResponse;
-import org.ouddom.employeemanagement.domain.dto.EmployeeDTO;
+import org.ouddom.employeemanagement.domain.dto.*;
 import org.ouddom.employeemanagement.domain.entity.Department;
 import org.ouddom.employeemanagement.domain.entity.Employee;
 import org.ouddom.employeemanagement.domain.entity.Project;
@@ -55,11 +55,37 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public ApiResponse<List<EmployeeDTO>> getAll(Integer pageNo, Integer pageSize) {
-        List<Employee> employees = employeeRepository.findAll();
+    public ApiResponse<List<EmployeeDTO>> getAll() {
+        List<Employee> employees = employeeRepository.findAllWithProjectsAndDepartment();
+        List<EmployeeDTO> employeeDTOS = new ArrayList<>();
+
+        for (Employee employee : employees) {
+            EmployeeDTO employeeDTO = new EmployeeDTO();
+            employeeDTO.setId(employee.getId());
+            employeeDTO.setName(employee.getName());
+
+            DepartmentDTO departmentDto = new DepartmentDTO();
+            departmentDto.setId(employee.getDepartment().getId());
+            departmentDto.setName(employee.getDepartment().getName());
+
+
+            List<ProjectEmployeeDto> projectEmployee = employee.getProjects().stream()
+                    .map(project -> {
+                        ProjectEmployeeDto projectEmployeeDto = new ProjectEmployeeDto();
+                        projectEmployeeDto.setId(project.getId());
+                        projectEmployeeDto.setName(project.getName());
+                        return projectEmployeeDto;
+                    })
+                    .collect(Collectors.toList());
+
+            employeeDTO.setDepartmentDTO(departmentDto);
+            employeeDTO.setProjectsDTO(projectEmployee);
+            employeeDTOS.add(employeeDTO);
+
+        }
         return ApiResponse.<List<EmployeeDTO>>builder()
-                .message("Get all employee successfully")
-                .payload(employees.stream().map(Employee::toDto).toList())
+                .message("Get all employees successfully")
+                .payload(employeeDTOS)
                 .status(HttpStatus.OK)
                 .build();
     }

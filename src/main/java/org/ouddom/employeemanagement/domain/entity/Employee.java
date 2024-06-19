@@ -11,7 +11,7 @@ import org.ouddom.employeemanagement.domain.dto.EmployeeDTO;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
+
 @Data
 @Entity
 @AllArgsConstructor
@@ -34,8 +34,8 @@ public class Employee {
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "employee_projects",
-            joinColumns = @JoinColumn(name = "employee_id"),
-            inverseJoinColumns = @JoinColumn(name = "projects_id")
+            joinColumns = @JoinColumn(name = "employee_id",referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "projects_id",referencedColumnName = "id")
     )
     private List<Project> projects = new ArrayList<>();
 
@@ -44,7 +44,8 @@ public class Employee {
                 this.id,
                 this.name,
                 this.department.toDto(),
-                this.projects.stream().map(Project::toDto).toList()
+                null
         );
     }
+
 }

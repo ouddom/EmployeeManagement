@@ -12,4 +12,6 @@ import java.util.UUID;
 public class ProjectDTO {
     private UUID id;
     private String name;
+    private List<EmployeeProjectDto> employees;
+
 }

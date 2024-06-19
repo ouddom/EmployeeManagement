@@ -11,5 +11,5 @@ import java.util.List;
 @Service
 public interface EmployeeService {
     ApiResponse<EmployeeDTO> create(EmployeeRequest employeeRequest);
-    ApiResponse<List<EmployeeDTO>> getAll(Integer pageNo,Integer pageSize);
+    ApiResponse<List<EmployeeDTO>> getAll();
 }

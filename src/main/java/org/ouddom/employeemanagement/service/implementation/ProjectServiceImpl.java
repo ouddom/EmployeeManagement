@@ -1,5 +1,6 @@
 package org.ouddom.employeemanagement.service.implementation;
 import lombok.AllArgsConstructor;
+import org.ouddom.employeemanagement.domain.dto.EmployeeProjectDto;
 import org.ouddom.employeemanagement.domain.entity.Employee;
 import org.ouddom.employeemanagement.exception.NotFoundExceptionClass;
 import org.ouddom.employeemanagement.exception.NullExceptionClass;
@@ -7,19 +8,16 @@ import org.ouddom.employeemanagement.domain.dto.ProjectDTO;
 import org.ouddom.employeemanagement.domain.entity.Project;
 import org.ouddom.employeemanagement.domain.request.ProjectRequest;
 import org.ouddom.employeemanagement.common.ApiResponse;
-import org.ouddom.employeemanagement.common.PageResponse;
 import org.ouddom.employeemanagement.repository.EmployeeRepository;
 import org.ouddom.employeemanagement.repository.ProjectRepository;
 import org.ouddom.employeemanagement.service.ProjectService;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -49,22 +47,32 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    public PageResponse<List<ProjectDTO>> getAll(Integer pageNo, Integer pageSize) {
-        Pageable pageable = PageRequest.of(pageNo,pageSize);
-        Page<ProjectDTO> page = projectRepository.findAll(pageable).map(Project::toDto);
-        if(page.getTotalElements() == 0){
-            throw new NotFoundExceptionClass("Project not found");
-        }else{
-            return PageResponse.<List<ProjectDTO>>builder()
-                    .message("Get all projects successfully")
-                    .payload(page.getContent())
-                    .status(HttpStatus.OK)
-                    .page(pageNo)
-                    .size(pageSize)
-                    .totalElement(page.getTotalElements())
-                    .totalPages(page.getTotalPages())
-                    .build();
+    public ApiResponse<List<ProjectDTO>> getAll() {
+        List<Project> projects = projectRepository.findAllWithEmployees();
+        List<ProjectDTO> projectDTOs = new ArrayList<>();
+
+        for (Project project : projects) {
+            ProjectDTO projectDTO = new ProjectDTO();
+            projectDTO.setId(project.getId());
+            projectDTO.setName(project.getName());
+
+            List<EmployeeProjectDto> employeeDTOs = project.getEmployees().stream()
+                    .map(employee -> {
+                        EmployeeProjectDto employeeDTO = new EmployeeProjectDto();
+                        employeeDTO.setId(employee.getId());
+                        employeeDTO.setName(employee.getName());
+                        return employeeDTO;
+                    })
+                    .collect(Collectors.toList());
+
+            projectDTO.setEmployees(employeeDTOs);
+            projectDTOs.add(projectDTO);
         }
+        return ApiResponse.<List<ProjectDTO>>builder()
+                .message("Get all projects successfully")
+                .payload(projectDTOs)
+                .status(HttpStatus.CREATED)
+                .build();
     }
 
     @Override

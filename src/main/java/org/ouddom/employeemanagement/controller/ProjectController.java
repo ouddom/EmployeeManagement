@@ -27,8 +27,8 @@ public class ProjectController {
 
     @GetMapping("")
     @Operation(summary = "Get all projects",description = "Get all projects from database")
-    public ResponseEntity<?> getAll(@RequestParam(defaultValue = "0") Integer pageNo, @RequestParam(defaultValue = "10") Integer pageSize){
-        return ResponseEntity.ok().body(projectService.getAll(pageNo,pageSize));
+    public ResponseEntity<?> getAll(){
+        return ResponseEntity.ok().body(projectService.getAll());
     }
 
     @DeleteMapping("{id}")

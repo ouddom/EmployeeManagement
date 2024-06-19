@@ -25,6 +25,6 @@ public class Project {
     private List<Employee> employees = new ArrayList<>();
 
     public ProjectDTO toDto(){
-        return new ProjectDTO(this.id,this.name);
+        return new ProjectDTO(id,name,null);
     }
 }
